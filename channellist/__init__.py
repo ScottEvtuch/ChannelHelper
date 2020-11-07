@@ -8,6 +8,10 @@ from channellist.frequency import (
     DMRConfig,
 )
 
+from channellist.repeaterbook import (
+    RBPuller
+)
+
 __all__ = [
     'Frequency',
     'Repeater',
@@ -15,4 +19,5 @@ __all__ = [
     'DStarConfig',
     'YSFConfig',
     'DMRConfig',
+    'RBPuller',
 ]
