@@ -39,35 +39,32 @@ class KenwoodTHD74Channel(Frequency):
             print("THD74 only supports FM and DStar")
 
 
-class KenwoodTHD74RepeaterConverter(object):
+class KenwoodTHD74ChannelList(object):
     """
-    Converts Repeater objects into THD74 Channels
+    Stores a list of THD74 Channels
     """
-    def __init__():
-        pass
+    def __init__(self):
+        self.channels = {}
 
     def convert_repeaters(
+        self,
         repeaters,
         i=1,
     ):
-        channels = {}
-
         if not isinstance(repeaters,list):
             repeaters = [repeaters]
 
         for repeater in repeaters:
             configs = []
             for config in repeater.configs:
-                if isinstance(config,FMConfig) or isinstance(config,DStarConfig):
+                if isinstance(config,(FMConfig,DStarConfig)):
                     configs.append(config)
             for config in configs:
-                channels[i] = KenwoodTHD74Channel(
+                self.channels[i] = KenwoodTHD74Channel(
                     names=repeater.names,
                     downlink_freq=repeater.downlink_freq,
                     uplink_freq=repeater.uplink_freq,
                     configs=[config],
                 )
             i += 1
-
-        return channels
 

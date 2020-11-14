@@ -14,7 +14,7 @@ from channellist.repeaterbook import (
 
 from channellist.kenwood import (
     KenwoodTHD74Channel,
-    KenwoodTHD74RepeaterConverter,
+    KenwoodTHD74ChannelList,
 )
 
 __all__ = [
