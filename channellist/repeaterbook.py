@@ -4,7 +4,10 @@ import csv
 import hashlib
 import json
 
-from channellist.frequency import Repeater
+from channellist.frequency import (
+    Repeater,
+    FMConfig,
+)
 
 
 class RBPuller(object):
@@ -95,10 +98,28 @@ class RBPuller(object):
             }
         else:
             position = None
+
+        configs = []
+
+        if repeater_data['FM Analog'] == "Yes":
+            fmconfig = FMConfig()
+            if repeater_data['PL'] not in ["","CSQ"]:
+                if repeater_data['PL'][0] == "D":
+                    fmconfig.dcs_output = int(repeater_data['PL'][1:])
+                else:
+                    fmconfig.ctcss_output = float(repeater_data['PL'])
+            if repeater_data['TSQ'] not in ["","CSQ"]:
+                if repeater_data['TSQ'][0] == "D":
+                    fmconfig.dcs_input = int(repeater_data['TSQ'][1:])
+                else:
+                    fmconfig.ctcss_input = float(repeater_data['TSQ'])
+            configs.append(fmconfig)
+
         repeater = Repeater(
             names=[],
             downlink_freq=repeater_data['Frequency'],
             uplink_freq=repeater_data['Input Freq'],
+            configs=configs,
             comment=repeater_data['Landmark'],
             callsign=repeater_data['Callsign'],
             position=position,
