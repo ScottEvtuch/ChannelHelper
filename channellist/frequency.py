@@ -2,7 +2,7 @@
 
 class Frequency(object):
     """
-    An entry that describes a set of configurations that will allow radio communication
+    Configuration parameters that will allow radio communication
     """
 
     def __init__(
@@ -10,20 +10,15 @@ class Frequency(object):
         names,
         downlink_freq,
         uplink_freq,
-        fm_config=None,
-        dstar_config=None,
-        ysf_config=None,
-        dmr_config=None,
+        configs,
+        group="",
         comment="",
     ):
         self.names = sorted(names, key=len, reverse=True)
         self.comment = comment
         self.downlink_freq = downlink_freq
         self.uplink_freq = uplink_freq
-        self.fm_config = fm_config
-        self.dstar_config = dstar_config
-        self.ysf_config = ysf_config
-        self.dmr_config = dmr_config
+        self.configs = configs
 
     def name(self, max_length=32):
         for name in self.names:
@@ -33,7 +28,7 @@ class Frequency(object):
 
 class Repeater(Frequency):
     """
-    An entry that describes configuration for a specific stationary repeater
+    Configuration parameters for a specific stationary repeater
     """
 
     def __init__(
@@ -41,10 +36,8 @@ class Repeater(Frequency):
         names,
         downlink_freq,
         uplink_freq,
-        fm_config=None,
-        dstar_config=None,
-        ysf_config=None,
-        dmr_config=None,
+        configs,
+        group="",
         comment="",
         callsign="",
         position={},
@@ -57,10 +50,8 @@ class Repeater(Frequency):
             names,
             downlink_freq,
             uplink_freq,
-            fm_config,
-            dstar_config,
-            ysf_config,
-            dmr_config
+            configs,
+            group,
         )
         self.callsign = callsign
         self.position = position
