@@ -11,11 +11,8 @@ class Frequency(object):
         downlink_freq,
         uplink_freq,
         configs,
-        group="",
-        comment="",
     ):
         self.names = sorted(names, key=len, reverse=True)
-        self.comment = comment
         self.downlink_freq = downlink_freq
         self.uplink_freq = uplink_freq
         self.configs = configs
@@ -37,21 +34,19 @@ class Repeater(Frequency):
         downlink_freq,
         uplink_freq,
         configs,
-        group="",
-        comment="",
         callsign="",
         position={},
         municipality="",
         county="",
         state="",
         country="",
+        comment=""
     ):
         super(Repeater, self).__init__(
             names,
             downlink_freq,
             uplink_freq,
             configs,
-            group,
         )
         self.callsign = callsign
         self.position = position
@@ -59,6 +54,7 @@ class Repeater(Frequency):
         self.county = county
         self.state = state
         self.country = country
+        self.comment = comment
         self._build_repeater_names()
 
 

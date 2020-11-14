@@ -1,17 +1,14 @@
 
-import csv
-
-from channellist import(
+from channelhelper import(
     Frequency,
     FMConfig,
-    DStarConfig,
 )
 
+class Channel(Frequency):
+    """
+    A memory channel for a radio
+    """
 
-class KenwoodTHD74Channel(Frequency):
-    """
-    A memory channel for the Kenwood TH-D74 RT Systems software
-    """
     def __init__(
         self,
         names,
@@ -21,32 +18,31 @@ class KenwoodTHD74Channel(Frequency):
         group="",
         comment="",
     ):
-        super(KenwoodTHD74Channel, self).__init__(
+        super(Channel, self).__init__(
             names,
             downlink_freq,
             uplink_freq,
             configs,
-            group,
-            comment,
         )
-        if len(self.configs) != 1:
-            print("THD74 cannot have channels with more than one mode")
-        elif isinstance(self.configs[0],FMConfig):
-            self.mode = 'FM'
-        elif isinstance(self.configs[0],DStarConfig):
-            self.mode = 'DStar'
-        else:
-            print("THD74 only supports FM and DStar")
+        self.group = group
+        self.comment = comment
 
 
-class KenwoodTHD74ChannelList(object):
+class ChannelList(object):
     """
-    Stores a list of THD74 Channels
+    A list of channels for a radio
     """
+
+    COMPATIBLE_CONFIGS = (
+        FMConfig,
+    )
+    CHANNEL_CLASS = Channel
+
     def __init__(self):
         self.channels = {}
+        self.groups = ()
 
-    def convert_repeaters(
+    def add_repeaters(
         self,
         repeaters,
         i=1,
@@ -57,10 +53,10 @@ class KenwoodTHD74ChannelList(object):
         for repeater in repeaters:
             configs = []
             for config in repeater.configs:
-                if isinstance(config,(FMConfig,DStarConfig)):
+                if isinstance(config,self.COMPATIBLE_CONFIGS):
                     configs.append(config)
             for config in configs:
-                self.channels[i] = KenwoodTHD74Channel(
+                self.channels[i] = self.CHANNEL_CLASS(
                     names=repeater.names,
                     downlink_freq=repeater.downlink_freq,
                     uplink_freq=repeater.uplink_freq,

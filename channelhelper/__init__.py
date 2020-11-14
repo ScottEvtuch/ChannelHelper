@@ -1,5 +1,5 @@
 
-from channellist.frequency import (
+from channelhelper.frequency import (
     Frequency,
     Repeater,
     FMConfig,
@@ -8,11 +8,16 @@ from channellist.frequency import (
     DMRConfig,
 )
 
-from channellist.repeaterbook import (
+from channelhelper.channellist import (
+    Channel,
+    ChannelList,
+)
+
+from channelhelper.repeaterbook import (
     RBPuller,
 )
 
-from channellist.kenwood import (
+from channelhelper.kenwood.thd74 import (
     KenwoodTHD74Channel,
     KenwoodTHD74ChannelList,
 )
@@ -24,6 +29,9 @@ __all__ = [
     'DStarConfig',
     'YSFConfig',
     'DMRConfig',
+    'Channel',
+    'ChannelList',
     'RBPuller',
     'KenwoodTHD74Channel',
+    'KenwoodTHD74ChannelList',
 ]
