@@ -9,7 +9,12 @@ from channellist.frequency import (
 )
 
 from channellist.repeaterbook import (
-    RBPuller
+    RBPuller,
+)
+
+from channellist.kenwood import (
+    KenwoodTHD74Channel,
+    KenwoodTHD74RepeaterConverter,
 )
 
 __all__ = [
@@ -20,4 +25,5 @@ __all__ = [
     'YSFConfig',
     'DMRConfig',
     'RBPuller',
+    'KenwoodTHD74Channel',
 ]
