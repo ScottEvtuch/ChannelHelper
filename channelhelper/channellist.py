@@ -2,6 +2,9 @@
 from channelhelper import(
     Frequency,
     FMConfig,
+    DStarConfig,
+    YSFConfig,
+    DMRConfig,
 )
 
 class Channel(Frequency):
@@ -35,6 +38,9 @@ class ChannelList(object):
 
     COMPATIBLE_CONFIGS = (
         FMConfig,
+        DStarConfig,
+        YSFConfig,
+        DMRConfig,
     )
     CHANNEL_CLASS = Channel
 
@@ -42,25 +48,48 @@ class ChannelList(object):
         self.channels = {}
         self.groups = ()
 
+    def add_channels(
+        self,
+        channel_list,
+    ):
+        if not isinstance(channel_list,ChannelList):
+            raise ValueError("add_channels requires a ChannelList object")
+
+        for key, input_channel in channel_list.channels.items():
+            self.channels[key] = self.CHANNEL_CLASS(
+                names=input_channel.names,
+                configs=input_channel.configs,
+                downlink_freq=input_channel.downlink_freq,
+                uplink_freq=input_channel.uplink_freq,
+                comment=input_channel.comment,
+            )
+
+    def add_frequencies(
+        self,
+        frequencies,
+        i=1,
+    ):
+        if not isinstance(frequencies,list):
+            frequencies = [frequencies]
+
+        for frequency in frequencies:
+            configs = []
+            for config in frequency.configs:
+                if isinstance(config,self.COMPATIBLE_CONFIGS):
+                    configs.append(config)
+            for config in configs:
+                self.channels[i] = self.CHANNEL_CLASS(
+                    names=frequency.names,
+                    configs=[config],
+                    downlink_freq=frequency.downlink_freq,
+                    uplink_freq=frequency.uplink_freq,
+                    comment=frequency.comment,
+                )
+            i += 1
+
     def add_repeaters(
         self,
         repeaters,
         i=1,
     ):
-        if not isinstance(repeaters,list):
-            repeaters = [repeaters]
-
-        for repeater in repeaters:
-            configs = []
-            for config in repeater.configs:
-                if isinstance(config,self.COMPATIBLE_CONFIGS):
-                    configs.append(config)
-            for config in configs:
-                self.channels[i] = self.CHANNEL_CLASS(
-                    names=repeater.names,
-                    downlink_freq=repeater.downlink_freq,
-                    uplink_freq=repeater.uplink_freq,
-                    configs=[config],
-                )
-            i += 1
-
+        self.add_frequencies(repeaters, i)
