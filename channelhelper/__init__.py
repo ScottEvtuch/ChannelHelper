@@ -13,6 +13,10 @@ from channelhelper.channellist import (
     ChannelList,
 )
 
+from channelhelper.config import (
+    JSONConfig,
+)
+
 from channelhelper.repeaterbook import (
     RBPuller,
 )
@@ -31,6 +35,7 @@ __all__ = [
     'DMRConfig',
     'Channel',
     'ChannelList',
+    'JSONConfig',
     'RBPuller',
     'KenwoodTHD74Channel',
     'KenwoodTHD74ChannelList',
