@@ -30,21 +30,18 @@ class JSONConfig(object):
     def _load_channels(self):
         for channel in self.json_data['channels']:
             channel_number = channel['number']
-            configs = []
-            for config in channel['configs']:
-                if config['type'] == 'FM':
-                    configs.append(
-                        FMConfig(
-                            ctcss_input=config.get('ctcss_input'),
-                            ctcss_output=config.get('ctcss_output'),
-                            dcs_input=config.get('dcs_input'),
-                            dcs_output=config.get('dcs_output'),
-                            dcs_polarity=config.get('dcs_polarity'),
-                        )
-                    )
+            input_config = channel['config']
+            if input_config['type'] == 'FM':
+                config = FMConfig(
+                    ctcss_input=input_config.get('ctcss_input'),
+                    ctcss_output=input_config.get('ctcss_output'),
+                    dcs_input=input_config.get('dcs_input'),
+                    dcs_output=input_config.get('dcs_output'),
+                    dcs_polarity=input_config.get('dcs_polarity'),
+                )
             frequency = Frequency(
                 names=channel['names'],
-                configs=configs,
+                configs=[config],
                 downlink_freq=channel['downlink_freq'],
                 uplink_freq=channel.get('uplink_freq'),
             )
