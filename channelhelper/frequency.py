@@ -8,14 +8,19 @@ class Frequency(object):
     def __init__(
         self,
         names,
-        downlink_freq,
-        uplink_freq,
         configs,
+        downlink_freq,
+        uplink_freq=None,
+        comment="",
     ):
         self.names = sorted(names, key=len, reverse=True)
-        self.downlink_freq = downlink_freq
-        self.uplink_freq = uplink_freq
         self.configs = configs
+        self.downlink_freq = downlink_freq
+        if uplink_freq:
+            self.uplink_freq = uplink_freq
+        else:
+            self.uplink_freq = downlink_freq
+        self.comment = comment
 
     def name(self, max_length=32):
         for name in self.names:
@@ -31,22 +36,23 @@ class Repeater(Frequency):
     def __init__(
         self,
         names,
-        downlink_freq,
-        uplink_freq,
         configs,
+        downlink_freq,
+        uplink_freq=None,
+        comment="",
         callsign="",
         position={},
         municipality="",
         county="",
         state="",
         country="",
-        comment=""
     ):
         super(Repeater, self).__init__(
             names,
+            configs,
             downlink_freq,
             uplink_freq,
-            configs,
+            comment,
         )
         self.callsign = callsign
         self.position = position
@@ -54,7 +60,6 @@ class Repeater(Frequency):
         self.county = county
         self.state = state
         self.country = country
-        self.comment = comment
         self._build_repeater_names()
 
 

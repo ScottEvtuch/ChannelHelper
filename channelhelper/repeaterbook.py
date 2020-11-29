@@ -120,16 +120,16 @@ class RBPuller(object):
 
         repeater = Repeater(
             names=[],
+            configs=configs,
             downlink_freq=repeater_data['Frequency'],
             uplink_freq=repeater_data['Input Freq'],
-            configs=configs,
+            comment=repeater_data['Landmark'],
             callsign=repeater_data['Callsign'],
             position=position,
             municipality=repeater_data['Nearest City'],
             county=repeater_data['County'],
             state=repeater_data['State'],
             country=repeater_data['Country'],
-            comment=repeater_data['Landmark'],
         )
 
         return repeater

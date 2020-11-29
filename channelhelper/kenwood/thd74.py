@@ -17,17 +17,17 @@ class KenwoodTHD74Channel(Channel):
     def __init__(
         self,
         names,
+        configs,
         downlink_freq,
         uplink_freq,
-        configs,
         group="",
         comment="",
     ):
         super(KenwoodTHD74Channel, self).__init__(
             names,
+            configs,
             downlink_freq,
             uplink_freq,
-            configs,
             group,
             comment,
         )

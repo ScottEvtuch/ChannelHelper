@@ -12,17 +12,17 @@ class Channel(Frequency):
     def __init__(
         self,
         names,
+        configs,
         downlink_freq,
         uplink_freq,
-        configs,
         group="",
         comment="",
     ):
         super(Channel, self).__init__(
             names,
+            configs,
             downlink_freq,
             uplink_freq,
-            configs,
         )
         self.group = group
         self.comment = comment
